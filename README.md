@@ -1,6 +1,6 @@
 # docker-file-log-driver
 
-File log driver for Docker that sends all of the containers output to a specified File. The code is inspired by https://github.com/pressrelations/docker-redis-log-driver.
+File log driver for Docker that sends all of the containers output to a specified File. The code is inspired by https://github.com/pressrelations/docker-redis-log-driver and forked from https://github.com/deep-compute/docker-file-log-driver.
 
 ## Background
 
@@ -66,16 +66,16 @@ The excellent [Logagg](https://github.com/deep-compute/logagg) is highly recomme
 ## Install
 
 ```
-$ docker plugin install deepcompute/docker-file-log-driver:1.0 --alias file-log-driver
-Plugin "deepcompute/docker-file-log-driver:1.0" is requesting the following privileges:
+$ docker plugin install exo-docker/docker-file-log-driver:2.0 --alias file-log-driver
+Plugin "exo-docker/docker-file-log-driver:2.0" is requesting the following privileges:
  - network: [host]
- - mount: [/var/log]
+ - mount: [/srv/logs]
 Do you grant the above permissions? [y/N] y
-1.0: Pulling from deepcompute/docker-file-log-driver
+1.0: Pulling from exo-docker/docker-file-log-driver
 a019fc3de34c: Download complete 
 Digest: sha256:5b785ded313acd0881c589c5f588f19b3ec3b5300230684a5a7ab1ed1c65e400
-Status: Downloaded newer image for deepcompute/docker-file-log-driver:1.0
-Installed plugin deepcompute/docker-file-log-driver:1.0
+Status: Downloaded newer image for exo-docker/docker-file-log-driver:2.0
+Installed plugin exo-docker/docker-file-log-driver:2.0
 ```
 ## Check
 ```
@@ -95,13 +95,13 @@ Run a container using this plugin:
 $ docker run --log-driver file-log-driver --log-opt fpath=/testing/test.log alpine date
 Tue Feb 27 06:13:36 UTC 2018
 ```
-**Note:** log file `--log-opt fpath` is stored inside **/var/log/fpath**
-i.e. fpath=/testing/test.log originally is stored in **/var/log/testing/test.log**
+**Note:** log file `--log-opt fpath` is stored inside **/srv/logs/fpath**
+i.e. fpath=/testing/test.log originally is stored in **/srv/logs/testing/test.log**
 
-Observe the logs inside path **/var/log/fpath**
+Observe the logs inside path **/srv/logs/fpath**
 
 ```
-$ sudo cat /var/log/testing/test.log |jq -r '.msg'| jq -r '.'
+$ sudo cat /srv/logs/testing/test.log |jq -r '.msg'| jq -r '.'
 {
   "message": "Tue Feb 27 06:13:36 UTC 2018",
   "container_id": "dd3662cd039c3ffb39cdddfe16bf8ca4ee7eeae25080df20f51b1bdf7d6b2f1a",
@@ -112,7 +112,7 @@ $ sudo cat /var/log/testing/test.log |jq -r '.msg'| jq -r '.'
   "command": "date",
   "tag": "dd3662cd039c",
   "extra": {},
-  "host": "deepcompute-ThinkPad-E470",
+  "host": "exo-docker-PC",
   "timestamp": "2018-02-27T06:13:36.58459717Z"
 }
 ```
@@ -130,10 +130,10 @@ $ docker run --label foo=abc --label bar=xyz -e SOME_ENV_VAR=foobar --log-driver
 Tue Feb 27 07:20:32 UTC 2018
 ```
 
-Observe the logs inside path **/var/log/fpath**
+Observe the logs inside path **/srv/logs/fpath**
 
 ```
-$ sudo cat /var/log/testing/test2.log |jq -r '.msg'| jq -r '.'
+$ sudo cat /srv/logs/testing/test2.log |jq -r '.msg'| jq -r '.'
 {
   "message": "Tue Feb 27 07:20:32 UTC 2018",
   "container_id": "3332274db729219ed738458eb120ddc64436513199d182fa7a9fe635363983ce",
@@ -148,7 +148,7 @@ $ sudo cat /var/log/testing/test2.log |jq -r '.msg'| jq -r '.'
     "bar": "xyz",
     "foo": "abc"
   },
-  "host": "deepcompute-ThinkPad-E470",
+  "host": "exo-docker-PC",
   "timestamp": "2018-02-27T07:20:32.948198669Z"
 }
 ```
@@ -159,7 +159,7 @@ All available options are documented here and can be set via `--log-opt KEY=VALU
 
 |Key|Default|Description|
 |---|---|---|
-|`fpath`|/var/log/docker/docker_file_log_driver_default.log|File path of the log file inside /var/log|
+|`fpath`|/srv/logs/docker/docker_file_log_driver_default.log|File path of the log file inside /srv/logs|
 |`max-size`|10|size in mb of each log file|
 |`max-backups`|10|number of log file backups after `max-size` is reched|
 |`max-age`|100|number of days log files are kept in the file system before dleting|

@@ -6,8 +6,8 @@ import (
 
 	"github.com/sirupsen/logrus"
 	"github.com/docker/go-plugins-helpers/sdk"
-	"github.com/deep-compute/docker-file-log-driver/driver"
-	"github.com/deep-compute/docker-file-log-driver/http"
+	"github.com/exo-docker/docker-file-log-driver/driver"
+	"github.com/exo-docker/docker-file-log-driver/http"
 )
 
 var logLevels = map[string]logrus.Level{

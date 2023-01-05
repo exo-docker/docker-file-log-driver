@@ -14,7 +14,7 @@ func parseDuration(d string) time.Duration {
 }
 
 func parseFpath(v string, _default string) string {
-	_v := ("/var/log" + v)
+	_v := ("/srv/logs" + v)
 	if _v != "" {
 		return (_v)
 	} else {

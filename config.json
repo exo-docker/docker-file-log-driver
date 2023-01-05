@@ -4,9 +4,9 @@
   "entrypoint": ["/usr/bin/docker-file-log-driver"],
   "mounts": [
     {
-        "destination": "/var/log",
+        "destination": "/srv/logs",
         "type": "bind",
-        "source": "/var/log",
+        "source": "/srv/logs",
         "options": ["rbind","rw"]
     }
 ],
