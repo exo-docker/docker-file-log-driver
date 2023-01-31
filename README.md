@@ -66,7 +66,7 @@ The excellent [Logagg](https://github.com/deep-compute/logagg) is highly recomme
 ## Install
 
 ```
-$ docker plugin install exo-docker/docker-file-log-driver:2.0 --alias file-log-driver
+$ docker plugin install exoplatform/file-log-driver:2.0 --alias file-log-driver
 Plugin "exo-docker/docker-file-log-driver:2.0" is requesting the following privileges:
  - network: [host]
  - mount: [/srv/logs]
